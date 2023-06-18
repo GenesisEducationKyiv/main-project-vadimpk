@@ -29,5 +29,11 @@ linters:
     - govet
     - wsl
 
+issues:
+  exclude-rules:
+    - linters:
+        - gosimple
+      text: "S1016"
+
 run:
   issues-exit-code: 1

@@ -8,25 +8,23 @@ import (
 )
 
 type emailStorage struct {
-	db *database.FileDB
+	db       *database.FileDB
+	filename string
 }
 
-func NewEmailStorage(db *database.FileDB) *emailStorage {
+func NewEmailStorage(db *database.FileDB, filename string) *emailStorage {
 	return &emailStorage{
-		db: db,
+		db:       db,
+		filename: filename,
 	}
 }
 
-const (
-	emailStorageFileName = "emails.txt"
-)
-
 func (s *emailStorage) Save(ctx context.Context, email string) error {
-	return s.db.Append(ctx, emailStorageFileName, []byte(email))
+	return s.db.Append(ctx, s.filename, []byte(email))
 }
 
 func (s *emailStorage) List(ctx context.Context) ([]string, error) {
-	data, err := s.db.Read(ctx, emailStorageFileName)
+	data, err := s.db.Read(ctx, s.filename)
 	if err != nil {
 		return nil, err
 	}

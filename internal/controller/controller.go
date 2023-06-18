@@ -53,8 +53,8 @@ func New(opts *Options) http.Handler {
 type httpResponseError struct {
 	Type    httpErrType `json:"-"`
 	Message string      `json:"message"`
-	Code    int         `json:"code"`
 	Details interface{} `json:"details,omitempty"`
+	Code    int         `json:"code"`
 }
 
 // httpErrType is used to define error type.
@@ -116,6 +116,7 @@ func wrapHandler(options *routerOptions, handler func(c *gin.Context) (interface
 			}
 			return
 		}
+
 		logger.Info("request handled")
 		c.JSON(http.StatusOK, body)
 	}

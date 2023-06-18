@@ -33,7 +33,7 @@ func Run(cfg *config.Config) {
 
 	apis := service.APIs{
 		Crypto: coinapi.New(&coinapi.Options{
-			ApiKey: cfg.CoinAPI.Key,
+			APIKey: cfg.CoinAPI.Key,
 			Logger: logger,
 		}),
 		Email: mailgun.New(&mailgun.Options{
@@ -81,7 +81,7 @@ func Run(cfg *config.Config) {
 	case s := <-interrupt:
 		logger.Info("app - Run - signal: " + s.String())
 
-	case err := <-httpServer.Notify():
+	case err = <-httpServer.Notify():
 		logger.Error("app - Run - httpServer.Notify", "err", err)
 	}
 

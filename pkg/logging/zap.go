@@ -19,6 +19,7 @@ var _ Logger = (*zapLogger)(nil)
 func New(level string) *zapLogger {
 	var l zapcore.Level
 	l, err := zapcore.ParseLevel(level)
+
 	if err != nil {
 		l = zap.InfoLevel
 	}

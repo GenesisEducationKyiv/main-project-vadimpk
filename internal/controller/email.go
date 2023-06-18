@@ -58,6 +58,7 @@ func (r *emailRoutes) subscribe(c *gin.Context) (interface{}, *httpResponseError
 				Message: err.Error(),
 			}
 		}
+
 		logger.Error("failed to subscribe", "err", err)
 		return nil, &httpResponseError{
 			Type:    ErrorTypeServer,
@@ -90,6 +91,7 @@ func (r *emailRoutes) sendRateInfo(c *gin.Context) (interface{}, *httpResponseEr
 				Message: err.Error(),
 			}
 		}
+
 		logger.Error("failed to send rate info", "err", err)
 		return nil, &httpResponseError{
 			Type:    ErrorTypeServer,

@@ -8,16 +8,16 @@ import (
 
 type mailgunAPI struct {
 	client *mailgun.MailgunImpl
-	from   string
 	logger logging.Logger
+	from   string
 }
 
 type Options struct {
+	Logger logging.Logger
+
 	APIKey string
 	Domain string
 	From   string
-
-	Logger logging.Logger
 }
 
 func New(options *Options) *mailgunAPI {

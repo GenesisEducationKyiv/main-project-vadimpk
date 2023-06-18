@@ -12,15 +12,15 @@ type coinAPI struct {
 }
 
 type Options struct {
-	ApiKey string
 	Logger logging.Logger
+	APIKey string
 }
 
 func New(opts *Options) *coinAPI {
 	c := resty.New()
 
 	c = c.SetBaseURL("https://rest.coinapi.io/v1").
-		SetHeader("X-CoinAPI-Key", opts.ApiKey)
+		SetHeader("X-CoinAPI-Key", opts.APIKey)
 
 	return &coinAPI{
 		client: c,

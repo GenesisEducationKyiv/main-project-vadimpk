@@ -84,6 +84,7 @@ func New(handler http.Handler, opts ...Option) *Server {
 // Start - bootstraps http server.
 func (s *Server) start() {
 	log.Printf("Starting HTTP server on port %s", s.server.Addr)
+
 	go func() {
 		s.notify <- s.server.ListenAndServe()
 		close(s.notify)

@@ -28,6 +28,7 @@ func (s *emailStorage) List(ctx context.Context) ([]string, error) {
 	if err != nil {
 		return nil, err
 	}
+
 	if len(data) == 0 {
 		return nil, nil
 	}
@@ -50,6 +51,7 @@ func (s *emailStorage) Get(ctx context.Context, email string) (string, error) {
 	if err != nil {
 		return "", err
 	}
+
 	if len(emails) == 0 {
 		return "", nil
 	}

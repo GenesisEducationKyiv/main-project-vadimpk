@@ -25,6 +25,7 @@ func (c *coinAPI) GetRate(ctx context.Context, opts *service.GetRateOptions) (fl
 	resp, err := c.client.R().
 		SetResult(&respBody).
 		Get(url)
+
 	if err != nil {
 		logger.Error("failed to get rate", "err", err)
 		return 0, fmt.Errorf("failed to get rate: %w", err)

@@ -4,59 +4,29 @@ linters-settings:
   goconst:
     min-len: 2
     min-occurrences: 3
-  gocritic:
-    enabled-tags:
-      - diagnostic
-      - experimental
-      - opinionated
-      - performance
-      - style
-  govet:
-    check-shadowing: true
-    enable:
-      - fieldalignment
-  nolintlint:
-    require-explanation: true
-    require-specific: true
 
 linters:
-  disable-all: true
   enable:
-    - bodyclose
-    - deadcode
-    - dogsled
     - dupl
     - errcheck
-    - exportloopref
-    - exhaustive
+    - errname
     - forbidigo
-    - gochecknoglobals
     - goconst
     - gocritic
     - gofmt
     - goimports
     - gomnd
-    - gocyclo
-    - gosec
     - gosimple
-    - govet
     - ineffassign
     - misspell
-    - nolintlint
-    - nakedret
     - prealloc
-    - predeclared
-    - revive
     - staticcheck
-    - structcheck
     - stylecheck
-    - thelper
     - tparallel
     - typecheck
-    - unconvert
-    - unparam
-    - varcheck
-    - whitespace
+
+  disable:
+    - govet
     - wsl
 
 run:

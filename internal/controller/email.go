@@ -1,9 +1,11 @@
 package controller
 
 import (
-	"github.com/gin-gonic/gin"
+	"errors"
+	"net/http"
 
-	"github.com/vadimpk/gses-2023/pkg/errs"
+	"github.com/gin-gonic/gin"
+	"github.com/vadimpk/gses-2023/internal/service"
 )
 
 type emailRoutes struct {
@@ -48,10 +50,10 @@ func (r *emailRoutes) subscribe(c *gin.Context) (interface{}, *httpResponseError
 
 	err := r.services.Email.Subscribe(c.Request.Context(), query.Email)
 	if err != nil {
-		if errs.IsExpected(err) {
+		if errors.Is(err, service.ErrSubscribeAlreadySubscribed) {
 			logger.Info("failed to subscribe", "err", err)
 			return nil, &httpResponseError{
-				Code:    errs.GetCode(err),
+				Code:    http.StatusConflict,
 				Type:    ErrorTypeClient,
 				Message: err.Error(),
 			}
@@ -80,10 +82,10 @@ func (r *emailRoutes) sendRateInfo(c *gin.Context) (interface{}, *httpResponseEr
 
 	output, err := r.services.Email.SendRateInfo(c.Request.Context())
 	if err != nil {
-		if errs.IsExpected(err) {
+		if errors.Is(err, service.ErrSendRateInfoFailedToSendToAllEmails) {
 			logger.Info("failed to send rate info", "err", err)
 			return nil, &httpResponseError{
-				Code:    errs.GetCode(err),
+				Code:    http.StatusServiceUnavailable,
 				Type:    ErrorTypeClient,
 				Message: err.Error(),
 			}

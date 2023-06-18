@@ -28,7 +28,7 @@ func Run(cfg *config.Config) {
 	}
 
 	storages := service.Storages{
-		Email: localstorage.NewEmailStorage(fileStorage),
+		Email: localstorage.NewEmailStorage(fileStorage, "emails.txt"),
 	}
 
 	apis := service.APIs{

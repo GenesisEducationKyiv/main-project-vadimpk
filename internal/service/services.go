@@ -2,9 +2,9 @@ package service
 
 import (
 	"context"
+	"errors"
 
 	"github.com/vadimpk/gses-2023/config"
-	"github.com/vadimpk/gses-2023/pkg/errs"
 	"github.com/vadimpk/gses-2023/pkg/logging"
 )
 
@@ -36,16 +36,16 @@ type EmailService interface {
 }
 
 var (
-	ErrSendRateInfoFailedToSendToAllEmails = errs.New("failed to send rate info to all emails", 400)
+	// ErrSubscribeAlreadySubscribed is returned when email is already subscribed.
+	ErrSubscribeAlreadySubscribed = errors.New("already subscribed")
+
+	// ErrSendRateInfoFailedToSendToAllEmails is returned when failed to send rate info to all emails.
+	ErrSendRateInfoFailedToSendToAllEmails = errors.New("failed to send rate info to all emails")
 )
 
 type SendRateInfoOutput struct {
 	FailedEmails []string
 }
-
-var (
-	ErrSubscribeAlreadySubscribed = errs.New("already subscribed", 409)
-)
 
 // CryptoService provides business logic for crypto service.
 type CryptoService interface {

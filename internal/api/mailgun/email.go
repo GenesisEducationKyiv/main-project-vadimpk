@@ -3,6 +3,7 @@ package mailgun
 import (
 	"context"
 	"fmt"
+
 	"github.com/vadimpk/gses-2023/internal/service"
 )
 

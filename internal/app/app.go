@@ -68,9 +68,9 @@ func Run(cfg *config.Config) {
 	httpServer := httpserver.New(
 		handler,
 		httpserver.Port(cfg.App.HTTPPort),
-		httpserver.ReadTimeout(time.Second*60),
-		httpserver.WriteTimeout(time.Second*60),
-		httpserver.ShutdownTimeout(time.Second*30),
+		httpserver.ReadTimeout(time.Second*time.Duration(cfg.App.HTTPReadTimeout)),
+		httpserver.WriteTimeout(time.Second*time.Duration(cfg.App.HTTPWriteTimeout)),
+		httpserver.ShutdownTimeout(time.Second*time.Duration(cfg.App.HTTPShutdownTimeout)),
 	)
 
 	// waiting signal

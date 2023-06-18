@@ -20,7 +20,10 @@ type (
 
 	// App - represent application configuration.
 	App struct {
-		HTTPPort string `env:"GSES_HTTP_PORT" env-default:"8080"`
+		HTTPPort            string `env:"GSES_HTTP_PORT" env-default:"8080"`
+		HTTPReadTimeout     int    `env:"GSES_READ_TIMEOUT" env-default:"60"`
+		HTTPWriteTimeout    int    `env:"GSES_WRITE_TIMEOUT" env-default:"60"`
+		HTTPShutdownTimeout int    `env:"GSES_SHUTDOWN_TIMEOUT" env-default:"60"`
 	}
 
 	// Log - represents logger configuration.

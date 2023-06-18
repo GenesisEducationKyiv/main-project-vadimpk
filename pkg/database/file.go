@@ -30,6 +30,8 @@ func (f *FileDB) Ping(ctx context.Context) error {
 	return err
 }
 
+var writePermissionCode = 0600
+
 func (f *FileDB) Append(ctx context.Context, file string, data []byte) error {
 	fullPath := filepath.Join(f.baseFilePath, file)
 
@@ -45,7 +47,7 @@ func (f *FileDB) Append(ctx context.Context, file string, data []byte) error {
 	}
 
 	// Open the file in append mode
-	fh, err := os.OpenFile(fullPath, os.O_APPEND|os.O_WRONLY, 0o600)
+	fh, err := os.OpenFile(fullPath, os.O_APPEND|os.O_WRONLY, os.FileMode(writePermissionCode))
 	if err != nil {
 		return err
 	}

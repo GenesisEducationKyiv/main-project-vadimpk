@@ -6,6 +6,7 @@ import (
 	"sync"
 
 	"github.com/ilyakaznacheev/cleanenv"
+	"github.com/joho/godotenv"
 )
 
 type (
@@ -43,7 +44,7 @@ type (
 
 	// MailGun - represents configuration for account at https://www.mailgun.com.
 	MailGun struct {
-		Key    string `env:"GSES_MAILGUN_KEY" env-default:"your-mailgun-key"`
+		Key    string `env:"GSES_MAILGUN_API_KEY" env-default:"your-mailgun-key"`
 		Domain string `env:"GSES_MAILGUN_DOMAIN" env-default:"your-mailgun-domain"`
 		From   string `env:"GSES_MAILGUN_FROM" env-default:"your-mailgun-from"`
 	}
@@ -55,8 +56,15 @@ var (
 )
 
 // Get returns config.
-func Get() *Config {
+func Get(env string) *Config {
 	once.Do(func() {
+		if env != "" {
+			err := godotenv.Load(env)
+			if err != nil {
+				log.Fatal("failed to load .env", err)
+			}
+		}
+
 		err := cleanenv.ReadEnv(&config)
 		if err != nil {
 			log.Fatal("failed to read env", err)

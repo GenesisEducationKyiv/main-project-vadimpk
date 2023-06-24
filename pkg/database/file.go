@@ -3,6 +3,7 @@ package database
 import (
 	"context"
 	"errors"
+	"log"
 	"os"
 	"path/filepath"
 )
@@ -12,6 +13,11 @@ type FileDB struct {
 }
 
 func NewFileDB(baseFilePath string) *FileDB {
+	err := os.MkdirAll(baseFilePath, os.ModePerm)
+	if err != nil {
+		log.Fatal(err)
+	}
+
 	return &FileDB{
 		baseFilePath: baseFilePath,
 	}
@@ -28,6 +34,10 @@ func (f *FileDB) Ping(ctx context.Context) error {
 	}
 
 	return err
+}
+
+func (f *FileDB) Destroy(ctx context.Context) error {
+	return os.RemoveAll(f.baseFilePath)
 }
 
 var writePermissionCode = 0600

@@ -6,7 +6,6 @@ import (
 	"sync"
 
 	"github.com/ilyakaznacheev/cleanenv"
-	"github.com/joho/godotenv"
 )
 
 type (
@@ -59,15 +58,15 @@ var (
 func Get(env string) *Config {
 	once.Do(func() {
 		if env != "" {
-			err := godotenv.Load(env)
+			err := cleanenv.ReadConfig(env, &config)
 			if err != nil {
 				log.Fatal("failed to load .env", err)
 			}
-		}
-
-		err := cleanenv.ReadEnv(&config)
-		if err != nil {
-			log.Fatal("failed to read env", err)
+		} else {
+			err := cleanenv.ReadEnv(&config)
+			if err != nil {
+				log.Fatal("failed to read env", err)
+			}
 		}
 	})
 

@@ -55,10 +55,10 @@ var (
 )
 
 // Get returns config.
-func Get(env string) *Config {
+func Get(env ...string) *Config {
 	once.Do(func() {
-		if env != "" {
-			err := cleanenv.ReadConfig(env, &config)
+		if len(env) > 0 {
+			err := cleanenv.ReadConfig(env[0], &config)
 			if err != nil {
 				log.Fatal("failed to load .env", err)
 			}

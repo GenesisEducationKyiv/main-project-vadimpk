@@ -33,7 +33,7 @@ type routerOptions struct {
 	logger   logging.Logger
 }
 
-func New(opts *Options) http.Handler {
+func New(opts *Options) *gin.Engine {
 	r := gin.Default()
 
 	routerOptions := routerOptions{

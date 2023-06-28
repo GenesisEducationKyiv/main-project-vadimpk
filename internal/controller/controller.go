@@ -49,7 +49,6 @@ func New(opts *Options) *gin.Engine {
 	return r
 }
 
-// httpResponseError provides a base error type for all errors.
 type httpResponseError struct {
 	Type    httpErrType `json:"-"`
 	Message string      `json:"message"`
@@ -57,7 +56,6 @@ type httpResponseError struct {
 	Code    int         `json:"code"`
 }
 
-// httpErrType is used to define error type.
 type httpErrType string
 
 const (
@@ -67,12 +65,10 @@ const (
 	ErrorTypeClient httpErrType = "client"
 )
 
-// Error is used to convert an error to a string.
 func (e httpResponseError) Error() string {
 	return fmt.Sprintf("%s: %s", e.Type, e.Message)
 }
 
-// wrapHandler is used to wrap handler. It handles panics and parses custom errors, returning them to the client.
 func wrapHandler(options *routerOptions, handler func(c *gin.Context) (interface{}, *httpResponseError)) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		logger := options.logger.Named("wrapHandler")

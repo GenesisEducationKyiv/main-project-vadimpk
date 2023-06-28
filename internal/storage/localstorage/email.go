@@ -46,21 +46,21 @@ func (s *emailStorage) List(ctx context.Context) ([]string, error) {
 	return filteredEmails, nil
 }
 
-func (s *emailStorage) Get(ctx context.Context, email string) (string, error) {
+func (s *emailStorage) Exist(ctx context.Context, email string) (bool, error) {
 	emails, err := s.List(ctx)
 	if err != nil {
-		return "", err
+		return false, err
 	}
 
 	if len(emails) == 0 {
-		return "", nil
+		return false, nil
 	}
 
 	for _, e := range emails {
 		if e == email {
-			return e, nil
+			return true, nil
 		}
 	}
 
-	return "", nil
+	return false, nil
 }

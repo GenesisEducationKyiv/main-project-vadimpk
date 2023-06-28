@@ -27,12 +27,12 @@ func (s *emailService) Subscribe(ctx context.Context, email string) error {
 		WithContext(ctx).
 		With("email", email)
 
-	existingEmail, err := s.storages.Email.Get(ctx, email)
+	exists, err := s.storages.Email.Exist(ctx, email)
 	if err != nil {
 		logger.Error("failed to get email from storage", "err", err)
 		return fmt.Errorf("failed to get email from storage: %w", err)
 	}
-	if existingEmail != "" {
+	if exists {
 		logger.Info("email already exists")
 		return ErrSubscribeAlreadySubscribed
 	}

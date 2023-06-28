@@ -40,9 +40,10 @@ func (f *FileDB) Destroy(ctx context.Context) error {
 	return os.RemoveAll(f.baseFilePath)
 }
 
+var writePermissionCode = 0600
+
 func (f *FileDB) Append(ctx context.Context, file string, data []byte) error {
 	fullPath := filepath.Join(f.baseFilePath, file)
-
 
 	// Open the file in append mode
 	fh, err := os.OpenFile(fullPath, os.O_CREATE|os.O_APPEND|os.O_WRONLY, os.FileMode(writePermissionCode))

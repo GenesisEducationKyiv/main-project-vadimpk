@@ -43,7 +43,7 @@ type (
 
 	// MailGun - represents configuration for account at https://www.mailgun.com.
 	MailGun struct {
-		Key    string `env:"GSES_MAILGUN_KEY" env-default:"your-mailgun-key"`
+		Key    string `env:"GSES_MAILGUN_API_KEY" env-default:"your-mailgun-key"`
 		Domain string `env:"GSES_MAILGUN_DOMAIN" env-default:"your-mailgun-domain"`
 		From   string `env:"GSES_MAILGUN_FROM" env-default:"your-mailgun-from"`
 	}
@@ -55,11 +55,19 @@ var (
 )
 
 // Get returns config.
-func Get() *Config {
+
+func Get(env ...string) *Config {
 	once.Do(func() {
-		err := cleanenv.ReadEnv(&config)
-		if err != nil {
-			log.Fatal("failed to read env", err)
+		if len(env) > 0 {
+			err := cleanenv.ReadConfig(env[0], &config)
+			if err != nil {
+				log.Fatal("failed to load .env", err)
+			}
+		} else {
+			err := cleanenv.ReadEnv(&config)
+			if err != nil {
+				log.Fatal("failed to read env", err)
+			}
 		}
 	})
 

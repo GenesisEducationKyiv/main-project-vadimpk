@@ -48,6 +48,8 @@ type SendRateInfoOutput struct {
 }
 
 // CryptoService provides business logic for crypto service.
+//
+//go:generate go run github.com/vektra/mockery/v2@v2.27.1 --dir . --name CryptoService --output ../../internal/service/mocks
 type CryptoService interface {
 	// GetRate returns current rate for crypto currency.
 	GetRate(ctx context.Context, opts *GetRateOptions) (float64, error)

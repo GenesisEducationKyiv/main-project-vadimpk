@@ -9,6 +9,8 @@ type APIs struct {
 
 // EmailAPI provides methods for sending emails that are used in EmailService and
 // implemented in external packages.
+//
+//go:generate go run github.com/vektra/mockery/v2@v2.27.1 --dir . --name EmailAPI --output ../../internal/service/mocks
 type EmailAPI interface {
 	Send(ctx context.Context, opts *SendOptions) error
 }

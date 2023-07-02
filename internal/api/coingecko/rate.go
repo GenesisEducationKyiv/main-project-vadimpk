@@ -8,7 +8,9 @@ import (
 )
 
 type getRateResponseBody struct {
-	Rate float64 `json:"rate"`
+	Bitcoin struct {
+		Uah float64 `json:"uah"`
+	} `json:"bitcoin"`
 }
 
 func (c *coinGeckoAPI) GetRate(ctx context.Context, fromCurrency, toCurrency string) (float64, error) {
@@ -35,8 +37,13 @@ func (c *coinGeckoAPI) GetRate(ctx context.Context, fromCurrency, toCurrency str
 		logger.Error("failed to get rate", "status", resp.Status(), "body", resp.String())
 		return 0, fmt.Errorf("failed to get rate: status %s", resp.Status())
 	}
-	logger = logger.With("rate", respBody.Rate)
+	logger = logger.With("response", respBody)
+
+	if respBody.Bitcoin.Uah == 0 {
+		logger.Error("failed to get rate", "body", resp.String())
+		return 0, fmt.Errorf("failed to get rate: %s", resp.String())
+	}
 
 	logger.Info("successfully got rate")
-	return respBody.Rate, nil
+	return respBody.Bitcoin.Uah, nil
 }

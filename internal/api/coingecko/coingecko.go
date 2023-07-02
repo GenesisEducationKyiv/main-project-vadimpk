@@ -13,7 +13,6 @@ type coinGeckoAPI struct {
 
 type Options struct {
 	Logger logging.Logger
-	APIKey string
 }
 
 func New(opts *Options) *coinGeckoAPI {

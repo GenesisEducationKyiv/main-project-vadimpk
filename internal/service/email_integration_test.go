@@ -121,8 +121,8 @@ func (suite *EmailServiceTestSuite) TestEmailSendRateInfo() {
 
 	cryptoSrv := mocks.NewCryptoService(suite.T())
 	cryptoSrv.On("GetRate", context.Background(), &service.GetRateOptions{
-		CryptoCurrency: "BTC",
-		Currency:       "UAH",
+		FromCurrency: "BTC",
+		ToCurrency:   "UAH",
 	}).Return(1.0, nil)
 
 	emailSrv := service.NewEmailService(testOptions, cryptoSrv)

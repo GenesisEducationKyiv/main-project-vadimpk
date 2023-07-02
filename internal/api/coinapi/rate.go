@@ -5,21 +5,20 @@ import (
 	"fmt"
 	"net/http"
 	"strings"
-
-	"github.com/vadimpk/gses-2023/internal/service"
 )
 
 type getRateResponseBody struct {
 	Rate float64 `json:"rate"`
 }
 
-func (c *coinAPI) GetRate(ctx context.Context, opts *service.GetRateOptions) (float64, error) {
+func (c *coinAPI) GetRate(ctx context.Context, fromCurrency, toCurrency string) (float64, error) {
 	logger := c.logger.
 		Named("GetRate").
 		WithContext(ctx).
-		With("opts", opts)
+		With("fromCurrency", fromCurrency).
+		With("toCurrency", toCurrency)
 
-	url := fmt.Sprintf("/exchangerate/%s/%s", strings.ToUpper(opts.CryptoCurrency), strings.ToUpper(opts.Currency))
+	url := fmt.Sprintf("/exchangerate/%s/%s", strings.ToUpper(fromCurrency), strings.ToUpper(toCurrency))
 
 	var respBody getRateResponseBody
 	resp, err := c.client.R().

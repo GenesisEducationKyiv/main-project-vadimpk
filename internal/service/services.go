@@ -56,6 +56,6 @@ type CryptoService interface {
 }
 
 type GetRateOptions struct {
-	CryptoCurrency string
-	Currency       string
+	FromCurrency string
+	ToCurrency   string
 }

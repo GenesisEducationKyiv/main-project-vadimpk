@@ -7,11 +7,7 @@ import (
 	"strings"
 )
 
-type getRateResponseBody struct {
-	Bitcoin struct {
-		Uah float64 `json:"uah"`
-	} `json:"bitcoin"`
-}
+type getRateResponseBody map[string]map[string]float64
 
 func (c *coinGeckoAPI) GetRate(ctx context.Context, fromCurrency, toCurrency string) (float64, error) {
 	logger := c.logger.
@@ -19,6 +15,9 @@ func (c *coinGeckoAPI) GetRate(ctx context.Context, fromCurrency, toCurrency str
 		WithContext(ctx).
 		With("fromCurrency", fromCurrency).
 		With("toCurrency", toCurrency)
+
+	fromCurrency = parseCurrency(fromCurrency)
+	toCurrency = parseCurrency(toCurrency)
 
 	var respBody getRateResponseBody
 	resp, err := c.client.R().
@@ -39,11 +38,25 @@ func (c *coinGeckoAPI) GetRate(ctx context.Context, fromCurrency, toCurrency str
 	}
 	logger = logger.With("response", respBody)
 
-	if respBody.Bitcoin.Uah == 0 {
-		logger.Error("failed to get rate", "body", resp.String())
-		return 0, fmt.Errorf("failed to get rate: %s", resp.String())
+	if _, ok := respBody[fromCurrency][toCurrency]; !ok {
+		logger.Error("failed to get rate", "err", "no such currency")
+		return 0, fmt.Errorf("failed to get rate: no such currency")
 	}
 
 	logger.Info("successfully got rate")
-	return respBody.Bitcoin.Uah, nil
+	return respBody[fromCurrency][toCurrency], nil
+}
+
+func parseCurrency(c string) string {
+	switch c {
+	case "BTC":
+		return "bitcoin"
+	case "ETH":
+		return "ethereum"
+	case "USD":
+		return "usd"
+	case "UAH":
+		return "uah"
+	}
+	return ""
 }

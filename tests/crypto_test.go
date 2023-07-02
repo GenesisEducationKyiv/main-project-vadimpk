@@ -27,7 +27,7 @@ func (suite *APITestSuite) TestCrypto_GetRate() {
 		suite.Run(tc.name, func() {
 			suite.T().Parallel()
 
-			req, _ := http.NewRequest("GET", "/api/rate", nil)
+			req, _ := http.NewRequest("GET", "/api/rate?crypto_currency=BTC&fiat_currency=UAH", nil)
 			req.Header.Set("Content-type", "application/json")
 
 			resp := httptest.NewRecorder()

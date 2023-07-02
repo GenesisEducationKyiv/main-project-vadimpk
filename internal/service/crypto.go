@@ -27,7 +27,13 @@ func (s *cryptoService) GetRate(ctx context.Context, opts *GetRateOptions) (floa
 
 	// TODO: validate opts
 
-	rate, err := s.apis.Crypto.GetRate(ctx, opts.FromCurrency, opts.ToCurrency)
+	chain, err := NewCryptoAPIChain(s.apis.CryptoProviders)
+	if err != nil {
+		logger.Error("failed to create crypto api chain", "err", err)
+		return 0, fmt.Errorf("failed to create crypto api chain: %w", err)
+	}
+
+	rate, err := chain.GetRate(ctx, opts.FromCurrency, opts.ToCurrency)
 	if err != nil {
 		logger.Error("failed to get rate", "err", err)
 		return 0, fmt.Errorf("failed to get rate from api: %w", err)

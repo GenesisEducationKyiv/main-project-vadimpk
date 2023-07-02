@@ -4,13 +4,14 @@ import (
 	"context"
 	"fmt"
 	"net/http"
+	"strconv"
 	"strings"
 )
 
 type getRateResponseBody struct {
 	Data struct {
-		Currency string             `json:"currency"`
-		Rates    map[string]float64 `json:"rates"`
+		Currency string            `json:"currency"`
+		Rates    map[string]string `json:"rates"`
 	} `json:"data"`
 }
 
@@ -46,5 +47,5 @@ func (c *coinbaseAPI) GetRate(ctx context.Context, fromCurrency, toCurrency stri
 	}
 
 	logger.Info("successfully got rate")
-	return rate, nil
+	return strconv.ParseFloat(rate, 64)
 }

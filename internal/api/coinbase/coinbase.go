@@ -13,17 +13,15 @@ type coinbaseAPI struct {
 
 type Options struct {
 	Logger logging.Logger
-	APIKey string
 }
 
 func New(opts *Options) *coinbaseAPI {
 	c := resty.New()
 
-	c = c.SetBaseURL("https://api.coinbase.com/v2").
-		SetHeader("X-CoinAPI-Key", opts.APIKey)
+	c = c.SetBaseURL("https://api.coinbase.com/v2")
 
 	return &coinbaseAPI{
 		client: c,
-		logger: opts.Logger.Named("CoinAPI"),
+		logger: opts.Logger.Named("CoinBaseAPI"),
 	}
 }

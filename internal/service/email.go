@@ -58,8 +58,8 @@ func (s *emailService) SendRateInfo(ctx context.Context) (*SendRateInfoOutput, e
 	}
 
 	rate, err := s.cryptoService.GetRate(ctx, &GetRateOptions{
-		CryptoCurrency: "BTC",
-		Currency:       "UAH",
+		FromCurrency: "BTC",
+		ToCurrency:   "UAH",
 	})
 	if err != nil {
 		logger.Error("failed to get rate", "err", err)

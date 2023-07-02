@@ -24,5 +24,5 @@ type SendOptions struct {
 // CryptoAPI provides methods for getting crypto rates that are used in CryptoService and
 // implemented in external packages.
 type CryptoAPI interface {
-	GetRate(ctx context.Context, opts *GetRateOptions) (float64, error)
+	GetRate(ctx context.Context, fromCurrency, toCurrency string) (float64, error)
 }

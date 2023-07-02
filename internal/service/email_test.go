@@ -114,8 +114,8 @@ func TestEmailService_SendRateInfo(t *testing.T) {
 	testRate := float64(100)
 
 	testGetRateOptions := service.GetRateOptions{
-		CryptoCurrency: "BTC",
-		Currency:       "UAH",
+		FromCurrency: "BTC",
+		ToCurrency:   "UAH",
 	}
 
 	testSendEmailOptions := service.SendOptions{

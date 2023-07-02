@@ -27,7 +27,7 @@ func (s *cryptoService) GetRate(ctx context.Context, opts *GetRateOptions) (floa
 
 	// TODO: validate opts
 
-	rate, err := s.apis.Crypto.GetRate(ctx, opts)
+	rate, err := s.apis.Crypto.GetRate(ctx, opts.FromCurrency, opts.ToCurrency)
 	if err != nil {
 		logger.Error("failed to get rate", "err", err)
 		return 0, fmt.Errorf("failed to get rate from api: %w", err)

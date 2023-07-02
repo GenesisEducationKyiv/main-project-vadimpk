@@ -27,8 +27,8 @@ func (r *cryptoRoutes) getRate(c *gin.Context) (interface{}, *httpResponseError)
 	logger := r.logger.Named("getRate")
 
 	rate, err := r.services.Crypto.GetRate(c.Request.Context(), &service.GetRateOptions{
-		CryptoCurrency: "BTC", // TODO: get from query
-		Currency:       "UAH", // TODO: get from query
+		FromCurrency: "BTC", // TODO: get from query
+		ToCurrency:   "UAH", // TODO: get from query
 	})
 	if err != nil {
 		// TODO: check if err is expected and return appropriate error type (client/server)

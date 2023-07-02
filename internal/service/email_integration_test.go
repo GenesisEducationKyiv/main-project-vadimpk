@@ -11,6 +11,7 @@ import (
 	"github.com/stretchr/testify/suite"
 	"github.com/vadimpk/gses-2023/config"
 	"github.com/vadimpk/gses-2023/internal/api/mailgun"
+	"github.com/vadimpk/gses-2023/internal/entity"
 	"github.com/vadimpk/gses-2023/internal/service"
 	"github.com/vadimpk/gses-2023/internal/service/mocks"
 	"github.com/vadimpk/gses-2023/internal/storage/localstorage"
@@ -121,8 +122,8 @@ func (suite *EmailServiceTestSuite) TestEmailSendRateInfo() {
 
 	cryptoSrv := mocks.NewCryptoService(suite.T())
 	cryptoSrv.On("GetRate", context.Background(), &service.GetRateOptions{
-		FromCurrency: "BTC",
-		ToCurrency:   "UAH",
+		Crypto: entity.CryptoCurrencyBTC,
+		Fiat:   entity.FiatCurrencyUAH,
 	}).Return(1.0, nil)
 
 	emailSrv := service.NewEmailService(testOptions, cryptoSrv)

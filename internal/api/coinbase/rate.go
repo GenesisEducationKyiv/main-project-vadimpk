@@ -29,20 +29,21 @@ func (c *coinbaseAPI) GetRate(ctx context.Context, fromCurrency, toCurrency stri
 		}).
 		SetResult(&respBody).
 		Get("/exchange-rates")
+	logger = logger.With("responseBody", resp.String()).With("statusCode", resp.StatusCode())
 
 	if err != nil {
-		logger.Error("failed to get rate", "err", err, "body", resp.String())
+		logger.Error("failed to get rate", "err", err)
 		return 0, fmt.Errorf("failed to get rate: %w", err)
 	}
 	if resp.StatusCode() != http.StatusOK {
-		logger.Error("failed to get rate", "status", resp.Status(), "body", resp.String())
+		logger.Error("failed to get rate")
 		return 0, fmt.Errorf("failed to get rate: status %s", resp.Status())
 	}
-	logger = logger.With("response", respBody)
+	logger = logger.With("respBody", respBody)
 
 	rate, ok := respBody.Data.Rates[strings.ToUpper(toCurrency)]
 	if !ok {
-		logger.Error("Currency not found in response", "currency", toCurrency)
+		logger.Error("toCurrency not found in response")
 		return 0, fmt.Errorf("currency %s not found in response", toCurrency)
 	}
 

@@ -27,13 +27,15 @@ func (c *coinGeckoAPI) GetRate(ctx context.Context, fromCurrency, toCurrency str
 		}).
 		SetResult(&respBody).
 		Get("/simple/price")
+	logger = logger.With("responseBody", resp.String()).With("statusCode", resp.StatusCode())
 
 	if err != nil {
-		logger.Error("failed to get rate", "err", err, "body", resp.String())
+		logger.Error("failed to get rate", "err", err)
 		return 0, fmt.Errorf("failed to get rate: %w", err)
 	}
+
 	if resp.StatusCode() != http.StatusOK {
-		logger.Error("failed to get rate", "status", resp.Status(), "body", resp.String())
+		logger.Error("failed to get rate")
 		return 0, fmt.Errorf("failed to get rate: status %s", resp.Status())
 	}
 	logger = logger.With("response", respBody)

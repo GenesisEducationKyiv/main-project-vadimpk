@@ -24,13 +24,14 @@ func (c *coinAPI) GetRate(ctx context.Context, fromCurrency, toCurrency string) 
 	resp, err := c.client.R().
 		SetResult(&respBody).
 		Get(url)
+	logger = logger.With("responseBody", resp.String()).With("statusCode", resp.StatusCode())
 
 	if err != nil {
 		logger.Error("failed to get rate", "err", err)
 		return 0, fmt.Errorf("failed to get rate: %w", err)
 	}
 	if resp.StatusCode() != http.StatusOK {
-		logger.Error("failed to get rate", "status", resp.Status())
+		logger.Error("failed to get rate")
 		return 0, fmt.Errorf("failed to get rate: status %s", resp.Status())
 	}
 	logger = logger.With("rate", respBody.Rate)

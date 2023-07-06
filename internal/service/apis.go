@@ -51,16 +51,20 @@ type CryptoAPIChain struct {
 // NewCryptoAPIChain creates chain of responsibility for crypto APIs.
 // It uses order to determine which API to use first. If no order is provided, default order is used.
 func NewCryptoAPIChain(providers CryptoAPIProviders, order ...CryptoAPIProviderType) (*CryptoAPIChain, error) {
-	var lastProvider *CryptoAPIChain
-
-	// default order
 	if len(order) == 0 {
-		order = []CryptoAPIProviderType{
-			CryptoAPIProviderCoinAPI,
-			CryptoAPIProviderCoinGecko,
-			CryptoAPIProviderCoinbase,
-		}
+		return (&CryptoAPIChain{}).build(providers, defaultCryptoAPIProviderOrder...)
 	}
+	return (&CryptoAPIChain{}).build(providers, order...)
+}
+
+var defaultCryptoAPIProviderOrder = []CryptoAPIProviderType{
+	CryptoAPIProviderCoinAPI,
+	CryptoAPIProviderCoinGecko,
+	CryptoAPIProviderCoinbase,
+}
+
+func (chain *CryptoAPIChain) build(providers CryptoAPIProviders, order ...CryptoAPIProviderType) (*CryptoAPIChain, error) {
+	var lastProvider *CryptoAPIChain
 
 	for i := len(order) - 1; i >= 0; i-- {
 		provider := order[i]

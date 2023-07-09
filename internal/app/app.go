@@ -77,10 +77,10 @@ func Run(cfg *config.Config) {
 	// init and run http server
 	httpServer := httpserver.New(
 		handler,
-		httpserver.Port(cfg.App.HTTPPort),
-		httpserver.ReadTimeout(time.Second*time.Duration(cfg.App.HTTPReadTimeout)),
-		httpserver.WriteTimeout(time.Second*time.Duration(cfg.App.HTTPWriteTimeout)),
-		httpserver.ShutdownTimeout(time.Second*time.Duration(cfg.App.HTTPShutdownTimeout)),
+		httpserver.Port(cfg.EmailService.HTTPPort),
+		httpserver.ReadTimeout(time.Second*time.Duration(cfg.EmailService.HTTPReadTimeout)),
+		httpserver.WriteTimeout(time.Second*time.Duration(cfg.EmailService.HTTPWriteTimeout)),
+		httpserver.ShutdownTimeout(time.Second*time.Duration(cfg.EmailService.HTTPShutdownTimeout)),
 	)
 
 	// waiting signal

@@ -11,7 +11,8 @@ import (
 type (
 	// Config - represent top level application configuration object.
 	Config struct {
-		App
+		CryptoService App
+		EmailService  App
 		Log
 		FileStorage
 		CoinAPI
@@ -20,7 +21,7 @@ type (
 
 	// App - represent application configuration.
 	App struct {
-		HTTPPort            string `env:"GSES_HTTP_PORT" env-default:"8080"`
+		HTTPPort            string `env:"GSES_HTTP_PORT" env-default:"8081"`
 		HTTPReadTimeout     int    `env:"GSES_READ_TIMEOUT" env-default:"60"`
 		HTTPWriteTimeout    int    `env:"GSES_WRITE_TIMEOUT" env-default:"60"`
 		HTTPShutdownTimeout int    `env:"GSES_SHUTDOWN_TIMEOUT" env-default:"60"`

@@ -14,7 +14,7 @@ RUN go mod download
 COPY . .
 
 # Build the Go app
-RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o /go/bin/srv ./cmd/srv/main.go
+RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o /go/bin/main ./cmd/main/main.go
 
 # run stage
 FROM alpine:latest

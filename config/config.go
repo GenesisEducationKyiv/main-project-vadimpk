@@ -11,20 +11,27 @@ import (
 type (
 	// Config - represent top level application configuration object.
 	Config struct {
-		CryptoService App
-		EmailService  App
+		CryptoService
+		EmailService
 		Log
 		FileStorage
 		CoinAPI
 		MailGun
 	}
 
-	// App - represent application configuration.
-	App struct {
-		HTTPPort            string `env:"GSES_HTTP_PORT" env-default:"8081"`
-		HTTPReadTimeout     int    `env:"GSES_READ_TIMEOUT" env-default:"60"`
-		HTTPWriteTimeout    int    `env:"GSES_WRITE_TIMEOUT" env-default:"60"`
-		HTTPShutdownTimeout int    `env:"GSES_SHUTDOWN_TIMEOUT" env-default:"60"`
+	CryptoService struct {
+		BaseURL             string `env:"GSES_CRYPTO_BASE_URL" env-default:"http://localhost:8081"`
+		HTTPPort            string `env:"GSES_CRYPTO_HTTP_PORT" env-default:"8081"`
+		HTTPReadTimeout     int    `env:"GSES_CRYPTO_READ_TIMEOUT" env-default:"60"`
+		HTTPWriteTimeout    int    `env:"GSES_CRYPTO_WRITE_TIMEOUT" env-default:"60"`
+		HTTPShutdownTimeout int    `env:"GSES_CRYPTO_SHUTDOWN_TIMEOUT" env-default:"60"`
+	}
+
+	EmailService struct {
+		HTTPPort            string `env:"GSES_EMAIL_HTTP_PORT" env-default:"8081"`
+		HTTPReadTimeout     int    `env:"GSES_EMAIL_READ_TIMEOUT" env-default:"60"`
+		HTTPWriteTimeout    int    `env:"GSES_EMAIL_WRITE_TIMEOUT" env-default:"60"`
+		HTTPShutdownTimeout int    `env:"GSES_EMAIL_SHUTDOWN_TIMEOUT" env-default:"60"`
 	}
 
 	// Log - represents logger configuration.

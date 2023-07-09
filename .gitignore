@@ -1,4 +1,4 @@
-.env
+core/.env
 .idea/
 
 .bin/

@@ -6,7 +6,7 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/vadimpk/gses-2023/config"
+	"github.com/vadimpk/gses-2023/crypto/config"
 	httpcontroller "github.com/vadimpk/gses-2023/crypto/internal/controller/http"
 	"github.com/vadimpk/gses-2023/crypto/internal/crypto"
 	"github.com/vadimpk/gses-2023/crypto/internal/crypto_provider"
@@ -48,10 +48,10 @@ func Run(cfg *config.Config) {
 	// init and run http server
 	httpServer := httpserver.New(
 		handler,
-		httpserver.Port(cfg.CryptoService.HTTPPort),
-		httpserver.ReadTimeout(time.Second*time.Duration(cfg.CryptoService.HTTPReadTimeout)),
-		httpserver.WriteTimeout(time.Second*time.Duration(cfg.CryptoService.HTTPWriteTimeout)),
-		httpserver.ShutdownTimeout(time.Second*time.Duration(cfg.CryptoService.HTTPShutdownTimeout)),
+		httpserver.Port(cfg.App.HTTPPort),
+		httpserver.ReadTimeout(time.Second*time.Duration(cfg.App.HTTPReadTimeout)),
+		httpserver.WriteTimeout(time.Second*time.Duration(cfg.App.HTTPWriteTimeout)),
+		httpserver.ShutdownTimeout(time.Second*time.Duration(cfg.App.HTTPShutdownTimeout)),
 	)
 
 	// waiting signal

@@ -10,7 +10,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/suite"
-	"github.com/vadimpk/gses-2023/config"
+	"github.com/vadimpk/gses-2023/core/config"
 	"github.com/vadimpk/gses-2023/core/internal/api/coinapi"
 	"github.com/vadimpk/gses-2023/core/internal/api/coinbase"
 	"github.com/vadimpk/gses-2023/core/internal/api/coingecko"

@@ -2,7 +2,7 @@ package crypto
 
 import (
 	"github.com/go-resty/resty/v2"
-	"github.com/vadimpk/gses-2023/config"
+	"github.com/vadimpk/gses-2023/core/config"
 	"github.com/vadimpk/gses-2023/core/pkg/logging"
 )
 

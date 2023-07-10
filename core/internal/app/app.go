@@ -7,7 +7,7 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/vadimpk/gses-2023/config"
+	"github.com/vadimpk/gses-2023/core/config"
 	"github.com/vadimpk/gses-2023/core/internal/api/crypto"
 	"github.com/vadimpk/gses-2023/core/internal/api/mailgun"
 	"github.com/vadimpk/gses-2023/core/internal/controller"
@@ -64,10 +64,10 @@ func Run(cfg *config.Config) {
 	// init and run http server
 	httpServer := httpserver.New(
 		handler,
-		httpserver.Port(cfg.EmailService.HTTPPort),
-		httpserver.ReadTimeout(time.Second*time.Duration(cfg.EmailService.HTTPReadTimeout)),
-		httpserver.WriteTimeout(time.Second*time.Duration(cfg.EmailService.HTTPWriteTimeout)),
-		httpserver.ShutdownTimeout(time.Second*time.Duration(cfg.EmailService.HTTPShutdownTimeout)),
+		httpserver.Port(cfg.App.HTTPPort),
+		httpserver.ReadTimeout(time.Second*time.Duration(cfg.App.HTTPReadTimeout)),
+		httpserver.WriteTimeout(time.Second*time.Duration(cfg.App.HTTPWriteTimeout)),
+		httpserver.ShutdownTimeout(time.Second*time.Duration(cfg.App.HTTPShutdownTimeout)),
 	)
 
 	// waiting signal

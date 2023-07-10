@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/vadimpk/gses-2023/config"
+	"github.com/vadimpk/gses-2023/crypto/config"
 	"github.com/vadimpk/gses-2023/crypto/internal/app"
 )
 

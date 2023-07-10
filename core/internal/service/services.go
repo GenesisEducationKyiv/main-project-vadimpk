@@ -4,7 +4,7 @@ import (
 	"context"
 	"errors"
 
-	"github.com/vadimpk/gses-2023/config"
+	"github.com/vadimpk/gses-2023/core/config"
 	"github.com/vadimpk/gses-2023/core/pkg/logging"
 )
 

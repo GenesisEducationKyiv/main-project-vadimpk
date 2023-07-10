@@ -8,7 +8,7 @@ import (
 
 	"github.com/DataDog/gostackparse"
 	"github.com/gin-gonic/gin"
-	"github.com/vadimpk/gses-2023/config"
+	"github.com/vadimpk/gses-2023/crypto/config"
 	"github.com/vadimpk/gses-2023/crypto/internal/crypto"
 	"github.com/vadimpk/gses-2023/crypto/internal/entity"
 	"github.com/vadimpk/gses-2023/crypto/pkg/logging"

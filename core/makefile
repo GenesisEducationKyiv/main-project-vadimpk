@@ -20,6 +20,3 @@ test-unit:
 
 test-integration:
 	go test -v ./... --tags=integration
-
-test-functional:
-	go test -v ./... --tags=functional

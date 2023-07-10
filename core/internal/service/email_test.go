@@ -8,8 +8,8 @@ import (
 
 	"github.com/stretchr/testify/assert"
 	"github.com/vadimpk/gses-2023/core/internal/entity"
-	service2 "github.com/vadimpk/gses-2023/core/internal/service"
-	mocks2 "github.com/vadimpk/gses-2023/core/internal/service/mocks"
+	"github.com/vadimpk/gses-2023/core/internal/service"
+	"github.com/vadimpk/gses-2023/core/internal/service/mocks"
 	"github.com/vadimpk/gses-2023/core/pkg/logging"
 )
 
@@ -17,7 +17,7 @@ func TestEmailService_Subscribe(t *testing.T) {
 	t.Parallel()
 
 	type mocksForExecution struct {
-		emailStorage *mocks2.EmailStorage
+		emailStorage *mocks.EmailStorage
 	}
 
 	type args struct {
@@ -59,7 +59,7 @@ func TestEmailService_Subscribe(t *testing.T) {
 				email: testEmail,
 			},
 			expected: expected{
-				err: service2.ErrSubscribeAlreadySubscribed,
+				err: service.ErrSubscribeAlreadySubscribed,
 			},
 		},
 	}
@@ -70,17 +70,17 @@ func TestEmailService_Subscribe(t *testing.T) {
 			t.Parallel()
 
 			testMocks := mocksForExecution{
-				emailStorage: mocks2.NewEmailStorage(t),
+				emailStorage: mocks.NewEmailStorage(t),
 			}
 
 			tc.mock(testMocks)
 
-			emailService := service2.NewEmailService(&service2.Options{
-				Storages: service2.Storages{
+			emailService := service.NewEmailService(&service.Options{
+				Storages: service.Storages{
 					Email: testMocks.emailStorage,
 				},
 				Logger: logging.New("debug"),
-			}, nil)
+			})
 
 			err := emailService.Subscribe(ctx, tc.args.email)
 			assert.Equal(t, tc.expected.err, err)
@@ -92,9 +92,9 @@ func TestEmailService_SendRateInfo(t *testing.T) {
 	t.Parallel()
 
 	type mocksForExecution struct {
-		emailStorage  *mocks2.EmailStorage
-		cryptoService *mocks2.CryptoService
-		emailAPI      *mocks2.EmailAPI
+		emailStorage *mocks.EmailStorage
+		cryptoAPI    *mocks.CryptoAPI
+		emailAPI     *mocks.EmailAPI
 	}
 
 	type args struct{}
@@ -114,12 +114,10 @@ func TestEmailService_SendRateInfo(t *testing.T) {
 
 	testRate := float64(100)
 
-	testGetRateOptions := service2.GetRateOptions{
-		Crypto: entity.CryptoCurrencyBTC,
-		Fiat:   entity.FiatCurrencyUAH,
-	}
+	testGetRateFromCurrency := entity.CryptoCurrencyBTC.String()
+	testGetRateToCurrency := entity.FiatCurrencyUSD.String()
 
-	testSendEmailOptions := service2.SendOptions{
+	testSendEmailOptions := service.SendOptions{
 		Subject: "Rate info",
 		Body:    fmt.Sprintf("Current rate is %f", testRate),
 	}
@@ -134,7 +132,7 @@ func TestEmailService_SendRateInfo(t *testing.T) {
 			name: "positive: successfully send rate info to all emails",
 			mock: func(m mocksForExecution) {
 				m.emailStorage.On("List", ctx).Return(testEmails, nil)
-				m.cryptoService.On("GetRate", ctx, &testGetRateOptions).Return(testRate, nil)
+				m.cryptoAPI.On("GetRate", ctx, testGetRateFromCurrency, testGetRateToCurrency).Return(testRate, nil)
 
 				for _, testEmail := range testEmails {
 					sendOptions := testSendEmailOptions
@@ -152,7 +150,7 @@ func TestEmailService_SendRateInfo(t *testing.T) {
 			name: "positive: successfully send rate info to some emails",
 			mock: func(m mocksForExecution) {
 				m.emailStorage.On("List", ctx).Return(testEmails, nil)
-				m.cryptoService.On("GetRate", ctx, &testGetRateOptions).Return(testRate, nil)
+				m.cryptoAPI.On("GetRate", ctx, testGetRateFromCurrency, testGetRateToCurrency).Return(testRate, nil)
 
 				for i, testEmail := range testEmails {
 					sendOptions := testSendEmailOptions
@@ -174,7 +172,7 @@ func TestEmailService_SendRateInfo(t *testing.T) {
 			name: "negative: failed to send rate info to all emails",
 			mock: func(m mocksForExecution) {
 				m.emailStorage.On("List", ctx).Return(testEmails, nil)
-				m.cryptoService.On("GetRate", ctx, &testGetRateOptions).Return(testRate, nil)
+				m.cryptoAPI.On("GetRate", ctx, testGetRateFromCurrency, testGetRateToCurrency).Return(testRate, nil)
 
 				for _, testEmail := range testEmails {
 					sendOptions := testSendEmailOptions
@@ -184,7 +182,7 @@ func TestEmailService_SendRateInfo(t *testing.T) {
 				}
 			},
 			expected: expected{
-				err:          service2.ErrSendRateInfoFailedToSendToAllEmails,
+				err:          service.ErrSendRateInfoFailedToSendToAllEmails,
 				failedEmails: testEmails,
 			},
 		},
@@ -196,22 +194,23 @@ func TestEmailService_SendRateInfo(t *testing.T) {
 			t.Parallel()
 
 			testMocks := mocksForExecution{
-				emailStorage:  mocks2.NewEmailStorage(t),
-				cryptoService: mocks2.NewCryptoService(t),
-				emailAPI:      mocks2.NewEmailAPI(t),
+				emailStorage: mocks.NewEmailStorage(t),
+				cryptoAPI:    mocks.NewCryptoAPI(t),
+				emailAPI:     mocks.NewEmailAPI(t),
 			}
 
 			tc.mock(testMocks)
 
-			emailService := service2.NewEmailService(&service2.Options{
-				Storages: service2.Storages{
+			emailService := service.NewEmailService(&service.Options{
+				Storages: service.Storages{
 					Email: testMocks.emailStorage,
 				},
-				APIs: service2.APIs{
-					Email: testMocks.emailAPI,
+				APIs: service.APIs{
+					Email:  testMocks.emailAPI,
+					Crypto: testMocks.cryptoAPI,
 				},
 				Logger: logging.New("debug"),
-			}, testMocks.cryptoService)
+			})
 
 			output, err := emailService.SendRateInfo(ctx)
 			assert.Equal(t, tc.expected.err, err)

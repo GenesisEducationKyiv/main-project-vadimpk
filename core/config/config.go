@@ -52,14 +52,12 @@ var (
 	once   sync.Once
 )
 
-// Get returns config.
-
 func Get(env ...string) *Config {
 	once.Do(func() {
 		if len(env) > 0 {
 			err := cleanenv.ReadConfig(env[0], &config)
 			if err != nil {
-				log.Fatal("failed to load .env", err)
+				log.Println("failed to load .env", err)
 			}
 		} else {
 			err := cleanenv.ReadEnv(&config)

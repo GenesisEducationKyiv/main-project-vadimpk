@@ -50,7 +50,7 @@ func (suite *EmailServiceTestSuite) TestEmailSubscribe() {
 		},
 		Logger: logging.New("debug"),
 	}
-	emailSrv := service2.NewEmailService(testOptions, nil)
+	emailSrv := service2.NewEmailService(testOptions)
 
 	type args struct {
 		email string
@@ -105,6 +105,9 @@ func (suite *EmailServiceTestSuite) TestEmailSubscribe() {
 func (suite *EmailServiceTestSuite) TestEmailSendRateInfo() {
 	cfg := config.Get("../../.env") // TODO: fix path
 
+	cryptoAPI := mocks.NewCryptoAPI(suite.T())
+	cryptoAPI.On("GetRate", context.Background(), entity.CryptoCurrencyBTC.String(), entity.FiatCurrencyUSD.String()).Return(1.0, nil)
+
 	testOptions := &service2.Options{
 		APIs: service2.APIs{
 			Email: mailgun.New(&mailgun.Options{
@@ -113,6 +116,7 @@ func (suite *EmailServiceTestSuite) TestEmailSendRateInfo() {
 				Domain: cfg.MailGun.Domain,
 				From:   cfg.MailGun.From,
 			}),
+			Crypto: cryptoAPI,
 		},
 		Storages: service2.Storages{
 			Email: localstorage.NewEmailStorage(suite.db, "EmailServiceTest_TestEmailSendRate.txt"),
@@ -120,13 +124,7 @@ func (suite *EmailServiceTestSuite) TestEmailSendRateInfo() {
 		Logger: logging.New("debug"),
 	}
 
-	cryptoSrv := mocks.NewCryptoService(suite.T())
-	cryptoSrv.On("GetRate", context.Background(), &service2.GetRateOptions{
-		Crypto: entity.CryptoCurrencyBTC,
-		Fiat:   entity.FiatCurrencyUAH,
-	}).Return(1.0, nil)
-
-	emailSrv := service2.NewEmailService(testOptions, cryptoSrv)
+	emailSrv := service2.NewEmailService(testOptions)
 
 	type expected struct {
 		failedEmails []string

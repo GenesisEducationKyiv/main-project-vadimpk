@@ -1,0 +1,28 @@
+name: "Crypto Service Tests"
+
+on:
+  push:
+    branches:
+      - "**"
+    paths:
+      - core/**
+      - .github/workflows/crypto-service-test.yaml
+
+defaults:
+  run:
+    working-directory: crypto
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Install go mods
+        if: always()
+        run: go mod download
+
+      - name: "Run e2e tests"
+        if: always()
+        run: go test -v ./... --tags=functional

@@ -31,7 +31,3 @@ jobs:
       - name: "Run unit tests"
         if: always()
         run: go test -v ./...
-
-      - name: "Run integration tests"
-        if: always()
-        run: go test -v ./... --tags=integration

@@ -4,9 +4,6 @@ on:
   push:
     branches:
       - "**"
-    paths:
-      - core/**
-      - .github/workflows/core-service-test.yaml
 
 env:
   GSES_MAILGUN_DOMAIN: sandbox6a08e723ed78488280308f0e66184eba.mailgun.org

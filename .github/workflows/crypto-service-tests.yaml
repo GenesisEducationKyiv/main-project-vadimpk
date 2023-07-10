@@ -4,9 +4,6 @@ on:
   push:
     branches:
       - "**"
-    paths:
-      - core/**
-      - .github/workflows/crypto-service-test.yaml
 
 defaults:
   run:

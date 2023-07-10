@@ -39,8 +39,6 @@ var (
 	once   sync.Once
 )
 
-// Get returns config.
-
 func Get(env ...string) *Config {
 	once.Do(func() {
 		if len(env) > 0 {

@@ -15,34 +15,28 @@ type (
 		CryptoService
 		Log
 		FileStorage
-		CoinAPI
 		MailGun
 	}
 
 	App struct {
-		HTTPPort            string `env:"GSES_EMAIL_HTTP_PORT" env-default:"8081"`
-		HTTPReadTimeout     int    `env:"GSES_EMAIL_READ_TIMEOUT" env-default:"60"`
-		HTTPWriteTimeout    int    `env:"GSES_EMAIL_WRITE_TIMEOUT" env-default:"60"`
-		HTTPShutdownTimeout int    `env:"GSES_EMAIL_SHUTDOWN_TIMEOUT" env-default:"60"`
+		HTTPPort            string `env:"GSES_HTTP_PORT" env-default:"8080"`
+		HTTPReadTimeout     int    `env:"GSES_READ_TIMEOUT" env-default:"60"`
+		HTTPWriteTimeout    int    `env:"GSES_WRITE_TIMEOUT" env-default:"60"`
+		HTTPShutdownTimeout int    `env:"GSES_SHUTDOWN_TIMEOUT" env-default:"60"`
 	}
 
 	CryptoService struct {
-		BaseURL string `env:"GSES_CRYPTO_BASE_URL" env-default:"http://localhost:8081"`
+		BaseURL string `env:"GSES_CRYPTO_SERVICE_BASE_URL" env-default:"http://localhost:8081"`
 	}
 
 	// Log - represents logger configuration.
 	Log struct {
-		Level string `env:"GD_LOG_LEVEL" env-default:"debug"`
+		Level string `env:"GSES_LOG_LEVEL" env-default:"debug"`
 	}
 
 	// FileStorage - represents file storage configuration.
 	FileStorage struct {
 		BaseDirectory string `env:"GSES_FILE_STORAGE_BASE_DIRECTORY" env-default:"local/"`
-	}
-
-	// CoinAPI - represents configuration for account at https://coinapi.io.
-	CoinAPI struct {
-		Key string `env:"GSES_COIN_API_KEY" env-default:"F9326003-515F-4655-A9A8-2ACF5D8E900F"`
 	}
 
 	// MailGun - represents configuration for account at https://www.mailgun.com.

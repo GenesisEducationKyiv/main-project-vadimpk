@@ -12,7 +12,7 @@ import (
 	"github.com/vadimpk/gses-2023/core/config"
 	"github.com/vadimpk/gses-2023/core/internal/api/mailgun"
 	"github.com/vadimpk/gses-2023/core/internal/entity"
-	service2 "github.com/vadimpk/gses-2023/core/internal/service"
+	"github.com/vadimpk/gses-2023/core/internal/service"
 	"github.com/vadimpk/gses-2023/core/internal/service/mocks"
 	"github.com/vadimpk/gses-2023/core/internal/storage/localstorage"
 	"github.com/vadimpk/gses-2023/core/pkg/database"
@@ -44,13 +44,13 @@ func TestSuite(t *testing.T) {
 
 func (suite *EmailServiceTestSuite) TestEmailSubscribe() {
 
-	testOptions := &service2.Options{
-		Storages: service2.Storages{
+	testOptions := &service.Options{
+		Storages: service.Storages{
 			Email: localstorage.NewEmailStorage(suite.db, "EmailServiceTest_TestEmailSubscribe.txt"),
 		},
 		Logger: logging.New("debug"),
 	}
-	emailSrv := service2.NewEmailService(testOptions)
+	emailSrv := service.NewEmailService(testOptions)
 
 	type args struct {
 		email string
@@ -61,13 +61,13 @@ func (suite *EmailServiceTestSuite) TestEmailSubscribe() {
 	}
 	testCases := []struct {
 		name     string
-		setup    func(s *service2.Options)
+		setup    func(s *service.Options)
 		args     args
 		expected expected
 	}{
 		{
 			name:  "positive: subscribed email",
-			setup: func(s *service2.Options) {},
+			setup: func(s *service.Options) {},
 			args: args{
 				email: "test@email.com",
 			},
@@ -77,7 +77,7 @@ func (suite *EmailServiceTestSuite) TestEmailSubscribe() {
 		},
 		{
 			name: "negative: such email already exists",
-			setup: func(s *service2.Options) {
+			setup: func(s *service.Options) {
 				err := s.Storages.Email.Save(context.Background(), "existing_email@email.com")
 				assert.NoError(suite.T(), err)
 			},
@@ -85,7 +85,7 @@ func (suite *EmailServiceTestSuite) TestEmailSubscribe() {
 				email: "existing_email@email.com",
 			},
 			expected: expected{
-				err: service2.ErrSubscribeAlreadySubscribed,
+				err: service.ErrSubscribeAlreadySubscribed,
 			},
 		},
 	}
@@ -108,8 +108,8 @@ func (suite *EmailServiceTestSuite) TestEmailSendRateInfo() {
 	cryptoAPI := mocks.NewCryptoAPI(suite.T())
 	cryptoAPI.On("GetRate", context.Background(), entity.CryptoCurrencyBTC.String(), entity.FiatCurrencyUSD.String()).Return(1.0, nil)
 
-	testOptions := &service2.Options{
-		APIs: service2.APIs{
+	testOptions := &service.Options{
+		APIs: service.APIs{
 			Email: mailgun.New(&mailgun.Options{
 				Logger: logging.New("debug"),
 				APIKey: cfg.MailGun.Key,
@@ -118,13 +118,13 @@ func (suite *EmailServiceTestSuite) TestEmailSendRateInfo() {
 			}),
 			Crypto: cryptoAPI,
 		},
-		Storages: service2.Storages{
+		Storages: service.Storages{
 			Email: localstorage.NewEmailStorage(suite.db, "EmailServiceTest_TestEmailSendRate.txt"),
 		},
 		Logger: logging.New("debug"),
 	}
 
-	emailSrv := service2.NewEmailService(testOptions)
+	emailSrv := service.NewEmailService(testOptions)
 
 	type expected struct {
 		failedEmails []string
@@ -133,12 +133,12 @@ func (suite *EmailServiceTestSuite) TestEmailSendRateInfo() {
 
 	testCases := []struct {
 		name     string
-		setup    func(s *service2.Options)
+		setup    func(s *service.Options)
 		expected expected
 	}{
 		{
 			name: "positive: send rate info",
-			setup: func(s *service2.Options) {
+			setup: func(s *service.Options) {
 				err := s.Storages.Email.Save(context.Background(), "vadyman.pk@gmail.com")
 				assert.NoError(suite.T(), err)
 				err = s.Storages.Email.Save(context.Background(), "vd.polishchuk4@gmail.com")

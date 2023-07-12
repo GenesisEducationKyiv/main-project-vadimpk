@@ -3,6 +3,8 @@ package service
 import (
 	"context"
 	"fmt"
+
+	"github.com/vadimpk/gses-2023/internal/entity"
 )
 
 type emailService struct {
@@ -58,8 +60,8 @@ func (s *emailService) SendRateInfo(ctx context.Context) (*SendRateInfoOutput, e
 	}
 
 	rate, err := s.cryptoService.GetRate(ctx, &GetRateOptions{
-		CryptoCurrency: "BTC",
-		Currency:       "UAH",
+		Crypto: entity.CryptoCurrencyBTC,
+		Fiat:   entity.FiatCurrencyUAH,
 	})
 	if err != nil {
 		logger.Error("failed to get rate", "err", err)

@@ -5,6 +5,7 @@ import (
 	"errors"
 
 	"github.com/vadimpk/gses-2023/config"
+	"github.com/vadimpk/gses-2023/internal/entity"
 	"github.com/vadimpk/gses-2023/pkg/logging"
 )
 
@@ -55,7 +56,24 @@ type CryptoService interface {
 	GetRate(ctx context.Context, opts *GetRateOptions) (float64, error)
 }
 
+var (
+	ErrGetRateInvalidCryptoCurrency = errors.New("invalid crypto currency")
+	ErrGetRateInvalidFiatCurrency   = errors.New("invalid fiat currency")
+)
+
 type GetRateOptions struct {
-	CryptoCurrency string
-	Currency       string
+	Crypto entity.CryptoCurrency
+	Fiat   entity.FiatCurrency
+}
+
+func (o *GetRateOptions) Validate() error {
+	if !o.Crypto.IsValid() {
+		return ErrGetRateInvalidCryptoCurrency
+	}
+
+	if !o.Fiat.IsValid() {
+		return ErrGetRateInvalidFiatCurrency
+	}
+
+	return nil
 }

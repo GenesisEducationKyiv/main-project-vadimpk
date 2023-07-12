@@ -13,19 +13,19 @@ type EmailStorage struct {
 	mock.Mock
 }
 
-// Get provides a mock function with given fields: ctx, email
-func (_m *EmailStorage) Get(ctx context.Context, email string) (string, error) {
+// Exist provides a mock function with given fields: ctx, email
+func (_m *EmailStorage) Exist(ctx context.Context, email string) (bool, error) {
 	ret := _m.Called(ctx, email)
 
-	var r0 string
+	var r0 bool
 	var r1 error
-	if rf, ok := ret.Get(0).(func(context.Context, string) (string, error)); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, string) (bool, error)); ok {
 		return rf(ctx, email)
 	}
-	if rf, ok := ret.Get(0).(func(context.Context, string) string); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, string) bool); ok {
 		r0 = rf(ctx, email)
 	} else {
-		r0 = ret.Get(0).(string)
+		r0 = ret.Get(0).(bool)
 	}
 
 	if rf, ok := ret.Get(1).(func(context.Context, string) error); ok {

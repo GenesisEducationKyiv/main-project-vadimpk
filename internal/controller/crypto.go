@@ -2,6 +2,7 @@ package controller
 
 import (
 	"github.com/gin-gonic/gin"
+	"github.com/vadimpk/gses-2023/internal/entity"
 
 	"github.com/vadimpk/gses-2023/internal/service"
 )
@@ -22,13 +23,28 @@ func setupCryptoRoutes(opts *routerOptions) {
 	opts.router.GET("/rate", wrapHandler(opts, cryptoRoutes.getRate))
 }
 
-// TODO: generate swagger
+type getRateRequestQuery struct {
+	CryptoCurrency string `form:"crypto_currency" binding:"required"`
+	FiatCurrency   string `form:"fiat_currency" binding:"required"`
+}
+
 func (r *cryptoRoutes) getRate(c *gin.Context) (interface{}, *httpResponseError) {
 	logger := r.logger.Named("getRate")
 
+	var query getRateRequestQuery
+	if err := c.ShouldBindQuery(&query); err != nil {
+		logger.Info("failed to bind query", "err", err)
+		return nil, &httpResponseError{
+			Type:    ErrorTypeClient,
+			Message: "failed to bind query",
+			Details: err.Error(),
+		}
+	}
+	logger = logger.With("query", query)
+
 	rate, err := r.services.Crypto.GetRate(c.Request.Context(), &service.GetRateOptions{
-		CryptoCurrency: "BTC", // TODO: get from query
-		Currency:       "UAH", // TODO: get from query
+		Crypto: entity.CryptoCurrency(query.CryptoCurrency),
+		Fiat:   entity.FiatCurrency(query.FiatCurrency),
 	})
 	if err != nil {
 		// TODO: check if err is expected and return appropriate error type (client/server)

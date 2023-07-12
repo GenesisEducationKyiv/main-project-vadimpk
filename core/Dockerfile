@@ -14,7 +14,7 @@ RUN go mod download
 COPY .. .
 
 # Build the Go app
-RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o /go/bin/srv ./cmd/main/main.go
+RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o /go/bin/main ./cmd/main/main.go
 
 # run stage
 FROM alpine:latest
@@ -24,10 +24,10 @@ RUN apk --no-cache add ca-certificates
 WORKDIR /root/
 
 # Copy the Pre-built binary file from the previous stage
-COPY --from=build-env /go/bin/srv .
+COPY --from=build-env /go/bin/main .
 
 # Expose port 8080 to the outside world
 EXPOSE 8080
 
 #Command to run the executable
-CMD ["./srv"]
+CMD ["./main"]

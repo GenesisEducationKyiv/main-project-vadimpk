@@ -8,6 +8,7 @@ require (
 	github.com/go-resty/resty/v2 v2.7.0
 	github.com/ilyakaznacheev/cleanenv v1.4.2
 	github.com/mailgun/mailgun-go/v4 v4.8.2
+	github.com/matthewmcnew/archtest v0.0.0-20191104172020-f1b53a45c22d
 	github.com/stretchr/testify v1.8.3
 	go.uber.org/zap v1.24.0
 )
@@ -27,7 +28,6 @@ require (
 	github.com/json-iterator/go v1.1.12 // indirect
 	github.com/klauspost/cpuid/v2 v2.0.9 // indirect
 	github.com/leodido/go-urn v1.2.1 // indirect
-	github.com/matthewmcnew/archtest v0.0.0-20191104172020-f1b53a45c22d // indirect
 	github.com/mattn/go-isatty v0.0.17 // indirect
 	github.com/modern-go/concurrent v0.0.0-20180306012644-bacd9c7ef1dd // indirect
 	github.com/modern-go/reflect2 v1.0.2 // indirect

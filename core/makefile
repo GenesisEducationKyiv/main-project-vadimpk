@@ -1,8 +1,8 @@
 build:
-	go build -o ./.bin/srv cmd/srv/main.go
+	go build -o ./.bin/main cmd/main/main.go
 
 run: build
-	./.bin/srv
+	./.bin/main
 
 IMAGE_NAME = gses-api
 VOLUME_PATH = $(shell pwd)/local

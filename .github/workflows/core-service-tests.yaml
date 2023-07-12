@@ -5,11 +5,6 @@ on:
     branches:
       - "**"
 
-env:
-  GSES_MAILGUN_DOMAIN: sandbox6a08e723ed78488280308f0e66184eba.mailgun.org
-  GSES_MAILGUN_API_KEY: 8f12f4a1193639c42c78e9953d6c5529-135a8d32-10349b23
-  GSES_MAILGUN_FROM: Mailgun Sandbox <mailgun@sandbox6a08e723ed78488280308f0e66184eba.mailgun.org>
-
 defaults:
   run:
     working-directory: core

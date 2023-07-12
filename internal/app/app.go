@@ -9,6 +9,8 @@ import (
 
 	"github.com/vadimpk/gses-2023/config"
 	"github.com/vadimpk/gses-2023/internal/api/coinapi"
+	"github.com/vadimpk/gses-2023/internal/api/coinbase"
+	"github.com/vadimpk/gses-2023/internal/api/coingecko"
 	"github.com/vadimpk/gses-2023/internal/api/mailgun"
 	"github.com/vadimpk/gses-2023/internal/controller"
 	"github.com/vadimpk/gses-2023/internal/service"
@@ -32,10 +34,18 @@ func Run(cfg *config.Config) {
 	}
 
 	apis := service.APIs{
-		Crypto: coinapi.New(&coinapi.Options{
-			APIKey: cfg.CoinAPI.Key,
-			Logger: logger,
-		}),
+		CryptoProviders: service.CryptoAPIProviders{
+			service.CryptoAPIProviderCoinAPI: coinapi.New(&coinapi.Options{
+				APIKey: cfg.CoinAPI.Key,
+				Logger: logger,
+			}),
+			service.CryptoAPIProviderCoinbase: coinbase.New(&coinbase.Options{
+				Logger: logger,
+			}),
+			service.CryptoAPIProviderCoinGecko: coingecko.New(&coingecko.Options{
+				Logger: logger,
+			}),
+		},
 		Email: mailgun.New(&mailgun.Options{
 			Domain: cfg.MailGun.Domain,
 			APIKey: cfg.MailGun.Key,

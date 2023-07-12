@@ -14,3 +14,12 @@ docker-build:
 .PHONY: docker-run
 docker-run:
 	docker run -p 8080:8080 -v $(VOLUME_PATH):/root/local --env-file .env $(IMAGE_NAME)
+
+test-unit:
+	go test -v ./...
+
+test-integration:
+	go test -v ./... --tags=integration
+
+test-functional:
+	go test -v ./... --tags=functional

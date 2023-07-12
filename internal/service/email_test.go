@@ -7,6 +7,7 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
+	"github.com/vadimpk/gses-2023/internal/entity"
 	"github.com/vadimpk/gses-2023/internal/service"
 	"github.com/vadimpk/gses-2023/internal/service/mocks"
 	"github.com/vadimpk/gses-2023/pkg/logging"
@@ -39,7 +40,7 @@ func TestEmailService_Subscribe(t *testing.T) {
 		{
 			name: "positive: subscribed email",
 			mock: func(m mocksForExecution) {
-				m.emailStorage.On("Get", ctx, testEmail).Return("", nil)
+				m.emailStorage.On("Exist", ctx, testEmail).Return(false, nil)
 				m.emailStorage.On("Save", ctx, testEmail).Return(nil)
 			},
 			args: args{
@@ -52,7 +53,7 @@ func TestEmailService_Subscribe(t *testing.T) {
 		{
 			name: "negative: such email already exists",
 			mock: func(m mocksForExecution) {
-				m.emailStorage.On("Get", ctx, testEmail).Return(testEmail, nil)
+				m.emailStorage.On("Exist", ctx, testEmail).Return(true, nil)
 			},
 			args: args{
 				email: testEmail,
@@ -114,8 +115,8 @@ func TestEmailService_SendRateInfo(t *testing.T) {
 	testRate := float64(100)
 
 	testGetRateOptions := service.GetRateOptions{
-		CryptoCurrency: "BTC",
-		Currency:       "UAH",
+		Crypto: entity.CryptoCurrencyBTC,
+		Fiat:   entity.FiatCurrencyUAH,
 	}
 
 	testSendEmailOptions := service.SendOptions{

@@ -1,22 +1,55 @@
 package logging
 
 import (
+	"encoding/json"
+	"log"
+
 	"github.com/streadway/amqp"
+	"go.uber.org/zap/zapcore"
 )
 
 type rabbitMQSyncer struct {
 	channel *amqp.Channel
-	queue   amqp.Queue
 }
 
-func NewRabbitMQSyncer(channel *amqp.Channel, queue amqp.Queue) *rabbitMQSyncer {
-	return &rabbitMQSyncer{channel: channel, queue: queue}
+func NewRabbitMQSyncer(channel *amqp.Channel) (*rabbitMQSyncer, error) {
+	_, err := channel.QueueDeclare(
+		"logger-info",
+		false,
+		false,
+		false,
+		false,
+		nil,
+	)
+	if err != nil {
+		return nil, err
+	}
+
+	_, err = channel.QueueDeclare(
+		"logger-error",
+		false,
+		false,
+		false,
+		false,
+		nil,
+	)
+	if err != nil {
+		return nil, err
+	}
+
+	return &rabbitMQSyncer{channel: channel}, nil
 }
 
 func (r *rabbitMQSyncer) Write(p []byte) (n int, err error) {
+	entry := zapcore.Entry{}
+	err = json.Unmarshal(p, &entry)
+	if err != nil {
+		return 0, err
+	}
+
 	err = r.channel.Publish(
 		"",
-		r.queue.Name,
+		"logger-"+entry.Level.String(),
 		false,
 		false,
 		amqp.Publishing{
@@ -24,6 +57,7 @@ func (r *rabbitMQSyncer) Write(p []byte) (n int, err error) {
 			Body:        p,
 		})
 	if err != nil {
+		log.Println("error publishing message to rabbitmq", err)
 		return 0, err
 	}
 

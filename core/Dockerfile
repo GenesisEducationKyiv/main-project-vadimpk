@@ -23,6 +23,8 @@ RUN apk --no-cache add ca-certificates
 
 WORKDIR /root/
 
+RUN mkdir local
+
 # Copy the Pre-built binary file from the previous stage
 COPY --from=build-env /go/bin/main .
 

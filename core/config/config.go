@@ -59,11 +59,11 @@ func Get(env ...string) *Config {
 			if err != nil {
 				log.Println("failed to load .env", err)
 			}
-		} else {
-			err := cleanenv.ReadEnv(&config)
-			if err != nil {
-				log.Fatal("failed to read env", err)
-			}
+		}
+
+		err := cleanenv.ReadEnv(&config)
+		if err != nil {
+			log.Fatal("failed to read env", err)
 		}
 	})
 

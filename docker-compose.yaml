@@ -1,0 +1,14 @@
+version: '3'
+services:
+  crypto:
+    build:
+      context: ./crypto
+      dockerfile: Dockerfile
+    ports:
+      - "8081:8081"
+  core:
+    build:
+      context: ./core
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"

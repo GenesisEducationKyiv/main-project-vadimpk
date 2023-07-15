@@ -38,7 +38,7 @@ func Run(cfg *config.Config) {
 		log.Fatal("failed to init rabbitmq syncer", "err", err)
 	}
 
-	logger := logging.NewAsyncLogger(rabbitmqSyncer)
+	logger := logging.NewAsyncLogger(rabbitmqSyncer, cfg.Log.Level)
 	if err != nil {
 		log.Fatal("failed to init rabbitmq logger", "err", err)
 	}

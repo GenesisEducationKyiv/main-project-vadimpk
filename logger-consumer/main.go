@@ -97,7 +97,7 @@ func (r *rabbitMQConsumer) Consume(out chan<- []byte) {
 				continue
 			}
 			m.Ack(false)
-		case <-time.After(100 * time.Millisecond):
+		case <-time.After(100 * time.Millisecond): // if no message received for 100ms, close the channel
 			close(out)
 			return
 		}
@@ -108,7 +108,7 @@ func (r *rabbitMQConsumer) Close() {
 	close := func(c io.Closer) {
 		err := c.Close()
 		if err != nil {
-			log.Println("failed to close rabbitmq channel", "err", err)
+			log.Println("failed to close rabbitmq", "err", err)
 		}
 	}
 

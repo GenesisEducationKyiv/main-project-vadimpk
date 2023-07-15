@@ -20,12 +20,19 @@ type Syncer interface {
 	Close() error
 }
 
-func NewAsyncLogger(syncer Syncer) *asyncLogger {
+func NewAsyncLogger(syncer Syncer, level string) *asyncLogger {
+	var l zapcore.Level
+	l, err := zapcore.ParseLevel(level)
+
+	if err != nil {
+		l = zap.InfoLevel
+	}
+
 	config := zap.NewProductionEncoderConfig()
 	core := zapcore.NewCore(
 		zapcore.NewJSONEncoder(config),
 		zapcore.AddSync(syncer),
-		zap.InfoLevel,
+		l,
 	)
 	logger := zap.New(core)
 

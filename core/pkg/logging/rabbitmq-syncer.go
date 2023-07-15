@@ -15,7 +15,7 @@ type rabbitMQSyncer struct {
 func NewRabbitMQSyncer(channel *amqp.Channel) (*rabbitMQSyncer, error) {
 	_, err := channel.QueueDeclare(
 		"logger-info",
-		false,
+		true,
 		false,
 		false,
 		false,
@@ -27,7 +27,19 @@ func NewRabbitMQSyncer(channel *amqp.Channel) (*rabbitMQSyncer, error) {
 
 	_, err = channel.QueueDeclare(
 		"logger-error",
+		true,
 		false,
+		false,
+		false,
+		nil,
+	)
+	if err != nil {
+		return nil, err
+	}
+
+	_, err = channel.QueueDeclare(
+		"logger-debug",
+		true,
 		false,
 		false,
 		false,

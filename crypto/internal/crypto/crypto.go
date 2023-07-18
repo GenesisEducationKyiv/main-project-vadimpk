@@ -8,7 +8,7 @@ import (
 	"github.com/vadimpk/gses-2023/crypto/config"
 	"github.com/vadimpk/gses-2023/crypto/internal/crypto_provider"
 	"github.com/vadimpk/gses-2023/crypto/internal/entity"
-	"github.com/vadimpk/gses-2023/crypto/pkg/logging"
+	"github.com/vadimpk/gses-2023/pkg/logging"
 )
 
 type Service interface {

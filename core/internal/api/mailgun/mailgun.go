@@ -2,7 +2,7 @@ package mailgun
 
 import (
 	"github.com/mailgun/mailgun-go/v4"
-	"github.com/vadimpk/gses-2023/core/pkg/logging"
+	"github.com/vadimpk/gses-2023/pkg/logging"
 )
 
 type mailgunAPI struct {

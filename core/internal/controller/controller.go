@@ -10,7 +10,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/vadimpk/gses-2023/core/config"
 	"github.com/vadimpk/gses-2023/core/internal/service"
-	"github.com/vadimpk/gses-2023/core/pkg/logging"
+	"github.com/vadimpk/gses-2023/pkg/logging"
 )
 
 type Options struct {

@@ -14,8 +14,8 @@ import (
 	"github.com/vadimpk/gses-2023/core/internal/service"
 	"github.com/vadimpk/gses-2023/core/internal/storage/localstorage"
 	"github.com/vadimpk/gses-2023/core/pkg/database"
-	"github.com/vadimpk/gses-2023/core/pkg/httpserver"
-	"github.com/vadimpk/gses-2023/core/pkg/logging"
+	"github.com/vadimpk/gses-2023/pkg/httpserver"
+	"github.com/vadimpk/gses-2023/pkg/logging"
 )
 
 func Run(cfg *config.Config) {

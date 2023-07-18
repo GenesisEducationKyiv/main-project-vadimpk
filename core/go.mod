@@ -9,9 +9,12 @@ require (
 	github.com/ilyakaznacheev/cleanenv v1.4.2
 	github.com/mailgun/mailgun-go/v4 v4.9.2
 	github.com/matthewmcnew/archtest v0.0.0-20191104172020-f1b53a45c22d
+	github.com/streadway/amqp v1.1.0
 	github.com/stretchr/testify v1.8.4
 	github.com/vadimpk/gses-2023 v0.0.0-20230628152116-0465a7bd8bcc
 )
+
+replace github.com/vadimpk/gses-2023 => ../
 
 require (
 	github.com/BurntSushi/toml v1.1.0 // indirect
@@ -35,7 +38,6 @@ require (
 	github.com/pelletier/go-toml/v2 v2.0.8 // indirect
 	github.com/pkg/errors v0.9.1 // indirect
 	github.com/pmezard/go-difflib v1.0.0 // indirect
-	github.com/streadway/amqp v1.1.0 // indirect
 	github.com/stretchr/objx v0.5.0 // indirect
 	github.com/twitchyliquid64/golang-asm v0.15.1 // indirect
 	github.com/ugorji/go/codec v1.2.11 // indirect

@@ -25,7 +25,7 @@ func main() {
 		log.Fatal("invalid args")
 	}
 
-	consumer := consumerFactory("rabbitmq", "logger-"+*level)
+	consumer := consumerFactory(*broker, "logger-"+*level)
 
 	out := make(chan []byte)
 

@@ -5,7 +5,7 @@ import (
 	"errors"
 
 	"github.com/vadimpk/gses-2023/core/config"
-	"github.com/vadimpk/gses-2023/core/pkg/logging"
+	"github.com/vadimpk/gses-2023/pkg/logging"
 )
 
 type Services struct {

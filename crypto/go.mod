@@ -8,7 +8,7 @@ require (
 	github.com/go-resty/resty/v2 v2.7.0
 	github.com/ilyakaznacheev/cleanenv v1.4.2
 	github.com/stretchr/testify v1.8.4
-	go.uber.org/zap v1.24.0
+	github.com/vadimpk/gses-2023 v0.0.0-20230628152116-0465a7bd8bcc
 )
 
 require (
@@ -37,6 +37,7 @@ require (
 	github.com/ugorji/go/codec v1.2.11 // indirect
 	go.uber.org/atomic v1.7.0 // indirect
 	go.uber.org/multierr v1.6.0 // indirect
+	go.uber.org/zap v1.24.0 // indirect
 	golang.org/x/arch v0.3.0 // indirect
 	golang.org/x/crypto v0.9.0 // indirect
 	golang.org/x/net v0.10.0 // indirect

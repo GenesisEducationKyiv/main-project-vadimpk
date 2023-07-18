@@ -2,8 +2,7 @@ package coinapi
 
 import (
 	"github.com/go-resty/resty/v2"
-
-	"github.com/vadimpk/gses-2023/crypto/pkg/logging"
+	"github.com/vadimpk/gses-2023/pkg/logging"
 )
 
 type coinAPI struct {

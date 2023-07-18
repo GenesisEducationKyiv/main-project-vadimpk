@@ -16,7 +16,7 @@ import (
 	"github.com/vadimpk/gses-2023/core/internal/service/mocks"
 	"github.com/vadimpk/gses-2023/core/internal/storage/localstorage"
 	"github.com/vadimpk/gses-2023/core/pkg/database"
-	"github.com/vadimpk/gses-2023/core/pkg/logging"
+	"github.com/vadimpk/gses-2023/pkg/logging"
 )
 
 type EmailServiceTestSuite struct {

@@ -10,7 +10,7 @@ import (
 	"github.com/vadimpk/gses-2023/core/internal/entity"
 	"github.com/vadimpk/gses-2023/core/internal/service"
 	"github.com/vadimpk/gses-2023/core/internal/service/mocks"
-	"github.com/vadimpk/gses-2023/core/pkg/logging"
+	"github.com/vadimpk/gses-2023/pkg/logging"
 )
 
 func TestEmailService_Subscribe(t *testing.T) {

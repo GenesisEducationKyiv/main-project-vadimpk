@@ -15,7 +15,7 @@ import (
 	"github.com/vadimpk/gses-2023/crypto/internal/crypto_provider/coinapi"
 	"github.com/vadimpk/gses-2023/crypto/internal/crypto_provider/coinbase"
 	"github.com/vadimpk/gses-2023/crypto/internal/crypto_provider/coingecko"
-	"github.com/vadimpk/gses-2023/crypto/pkg/logging"
+	"github.com/vadimpk/gses-2023/pkg/logging"
 )
 
 type APITestSuite struct {

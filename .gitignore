@@ -1,4 +1,5 @@
-.env
+core/.env
 .idea/
 
 .bin/
+/crypto/.env

@@ -18,6 +18,14 @@ services:
     networks:
       - rabbitmq_go_net
 
+  logger-consumer:
+    restart: always
+    build:
+      context: ./logger-consumer
+      dockerfile: Dockerfile
+    networks:
+      - rabbitmq_go_net
+
   rabbitmq:
     image: rabbitmq:3-management-alpine
     container_name: 'rabbitmq'

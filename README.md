@@ -13,33 +13,30 @@ This repository contains the code for a simple API developed for the Genesis Sof
 
 ### Prerequisites
 
-1. Create `local/` directory in the root directory of the project. This is where the database file will be stored.
+1. Create `local/` directory in the `core/` directory of the project. This is where the database file will be stored.
 2. Get API key from [CoinAPI](https://www.coinapi.io/). Or you can use my API key, which you can find in `config/config.go`.
 3. Sign up for [MailGun](https://www.mailgun.com/) account. You will need to verify your domain and get your API key.
-4. Fill `.env` file in the root directory of the project with the following variables:
+4. Fill `.env` files in both `core/` and `crypto/` directories with the following variables:
 
 ```
 GSES_COIN_API_KEY=<your_coin_api_key>
+
 GSES_MAILGUN_DOMAIN=<your_mailgun_domain>
 GSES_MAILGUN_API_KEY=<your_mailgun_api_key>
 GSES_MAILGUN_FROM=<your_mailgun_from_email>
 ```
 
-### Run locally
+### Run
 
-1. Run `make run` to start the server locally.
-
-### Run in Docker
-
-1. Run `make docker-build` to build the docker image.
-2. Run `make docker-run` to start the server in docker container.
+1. Run `docker-compose up` to start the application locally.
 
 ### List of endpoints:
 
-- `/api/rate` (GET): get current bitcoin rate in UAH
-- `/api/subscribe` (POST): subscribe to mailing list
-- `/api/sendEmails` (POST): send emails with current currrency rate to all subscribers
+- `:8081/api/rate` (GET): get current bitcoin rate in UAH
+- `:8080/api/subscribe` (POST): subscribe to mailing list
+- `:8080/api/sendEmails` (POST): send emails with current currrency rate to all subscribers
 
 ## Architecture
 
-![image](https://github.com/vadimpk/gses-2023/assets/65962115/3a45eac1-c43a-4a48-82af-2cfafd3f603e)
+<img width="1087" alt="architecture" src="https://github.com/GenesisEducationKyiv/main-project-vadimpk/assets/65962115/3f8f629d-0f56-463c-a0c6-8d4f4b1213aa">
+

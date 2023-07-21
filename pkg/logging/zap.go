@@ -15,8 +15,8 @@ type zapLogger struct {
 
 var _ Logger = (*zapLogger)(nil)
 
-// New - creates new instance logger.
-func New(level string) *zapLogger {
+// NewZapLogger - creates new instance logger.
+func NewZapLogger(level string) *zapLogger {
 	var l zapcore.Level
 	l, err := zapcore.ParseLevel(level)
 

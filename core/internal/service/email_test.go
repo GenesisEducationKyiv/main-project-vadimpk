@@ -79,7 +79,7 @@ func TestEmailService_Subscribe(t *testing.T) {
 				Storages: service.Storages{
 					Email: testMocks.emailStorage,
 				},
-				Logger: logging.New("debug"),
+				Logger: logging.NewZapLogger("debug"),
 			})
 
 			err := emailService.Subscribe(ctx, tc.args.email)
@@ -209,7 +209,7 @@ func TestEmailService_SendRateInfo(t *testing.T) {
 					Email:  testMocks.emailAPI,
 					Crypto: testMocks.cryptoAPI,
 				},
-				Logger: logging.New("debug"),
+				Logger: logging.NewZapLogger("debug"),
 			})
 
 			output, err := emailService.SendRateInfo(ctx)

@@ -48,7 +48,7 @@ func (suite *EmailServiceTestSuite) TestEmailSubscribe() {
 		Storages: service.Storages{
 			Email: localstorage.NewEmailStorage(suite.db, "EmailServiceTest_TestEmailSubscribe.txt"),
 		},
-		Logger: logging.New("debug"),
+		Logger: logging.NewZapLogger("debug"),
 	}
 	emailSrv := service.NewEmailService(testOptions)
 
@@ -111,7 +111,7 @@ func (suite *EmailServiceTestSuite) TestEmailSendRateInfo() {
 	testOptions := &service.Options{
 		APIs: service.APIs{
 			Email: mailgun.New(&mailgun.Options{
-				Logger: logging.New("debug"),
+				Logger: logging.NewZapLogger("debug"),
 				APIKey: cfg.MailGun.Key,
 				Domain: cfg.MailGun.Domain,
 				From:   cfg.MailGun.From,
@@ -121,7 +121,7 @@ func (suite *EmailServiceTestSuite) TestEmailSendRateInfo() {
 		Storages: service.Storages{
 			Email: localstorage.NewEmailStorage(suite.db, "EmailServiceTest_TestEmailSendRate.txt"),
 		},
-		Logger: logging.New("debug"),
+		Logger: logging.NewZapLogger("debug"),
 	}
 
 	emailSrv := service.NewEmailService(testOptions)

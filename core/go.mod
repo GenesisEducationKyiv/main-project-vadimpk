@@ -9,9 +9,12 @@ require (
 	github.com/ilyakaznacheev/cleanenv v1.4.2
 	github.com/mailgun/mailgun-go/v4 v4.9.2
 	github.com/matthewmcnew/archtest v0.0.0-20191104172020-f1b53a45c22d
+	github.com/streadway/amqp v1.1.0
 	github.com/stretchr/testify v1.8.4
 	github.com/vadimpk/gses-2023 v0.0.0-20230628152116-0465a7bd8bcc
 )
+
+replace github.com/vadimpk/gses-2023 => ../
 
 require (
 	github.com/BurntSushi/toml v1.1.0 // indirect

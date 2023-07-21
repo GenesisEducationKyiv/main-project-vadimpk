@@ -16,6 +16,7 @@ type (
 		Log
 		FileStorage
 		MailGun
+		RabbitMQ
 	}
 
 	App struct {
@@ -44,6 +45,11 @@ type (
 		Key    string `env:"GSES_MAILGUN_API_KEY" env-default:"your-mailgun-key"`
 		Domain string `env:"GSES_MAILGUN_DOMAIN" env-default:"your-mailgun-domain"`
 		From   string `env:"GSES_MAILGUN_FROM" env-default:"your-mailgun-from"`
+	}
+
+	RabbitMQ struct {
+		URL             string `env:"GSES_RABBITMQ_HOST" env-default:"amqp://guest:guest@localhost:5672/"`
+		LoggerQueueName string `env:"GSES_RABBITMQ_LOGGER_QUEUE_NAME" env-default:"logger"`
 	}
 )
 

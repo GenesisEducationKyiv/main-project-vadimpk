@@ -2,11 +2,13 @@ package app
 
 import (
 	"context"
+	"log"
 	"os"
 	"os/signal"
 	"syscall"
 	"time"
 
+	"github.com/streadway/amqp"
 	"github.com/vadimpk/gses-2023/core/config"
 	"github.com/vadimpk/gses-2023/core/internal/api/crypto"
 	"github.com/vadimpk/gses-2023/core/internal/api/mailgun"
@@ -19,12 +21,32 @@ import (
 )
 
 func Run(cfg *config.Config) {
-	logger := logging.New(cfg.Log.Level)
+	rabbitmqConn, err := amqp.Dial(cfg.RabbitMQ.URL)
+	if err != nil {
+		log.Fatal("failed to init rabbitmq connection", "err", err)
+	}
+	defer rabbitmqConn.Close()
+
+	rabbitmqChannel, err := rabbitmqConn.Channel()
+	if err != nil {
+		log.Fatal("failed to init rabbitmq channel", "err", err)
+	}
+	defer rabbitmqChannel.Close()
+
+	rabbitmqSyncer, err := logging.NewRabbitMQSyncer(rabbitmqChannel)
+	if err != nil {
+		log.Fatal("failed to init rabbitmq syncer", "err", err)
+	}
+
+	logger := logging.NewAsyncLogger(rabbitmqSyncer, cfg.Log.Level)
+	if err != nil {
+		log.Fatal("failed to init rabbitmq logger", "err", err)
+	}
 
 	fileStorage := database.NewFileDB(cfg.FileStorage.BaseDirectory)
-	err := fileStorage.Ping(context.TODO())
+	err = fileStorage.Ping(context.TODO())
 	if err != nil {
-		logger.Fatal("failed to init file storage", "err", err)
+		log.Fatal("failed to init file storage", "err", err)
 	}
 
 	storages := service.Storages{
